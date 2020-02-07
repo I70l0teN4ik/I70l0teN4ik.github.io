@@ -1,0 +1,16 @@
+{
+  "short_name": "ExTr",
+  "name": "I70l0teN4ik Expense Tracker",
+  "icons": [
+    {
+      "src": "/images/icon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#236932",
+  "display": "standalone",
+  "theme_color": "#003200",
+  "orientation": "portrait-primary"
+}
