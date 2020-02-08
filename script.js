@@ -44,7 +44,6 @@ const xhrWithAuth = (method, url, callback) => {
   };
 
   xhr.send();
-
 };
 
 const getData = () => {
