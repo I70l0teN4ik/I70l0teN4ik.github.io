@@ -31,6 +31,12 @@ header > div, header > img {
     padding: 1rem;
 }
 
+header img {
+    padding: 1rem;
+    height: 32px;
+    width: 32px;
+}
+
 h1 a {
     color: #69AA69;
     text-decoration: none;
@@ -68,7 +74,7 @@ div#app {
 }
 
 .error {
-    background-color: #d50000;
+    background-color: #d50000!important;
 }
 
 .hidden {

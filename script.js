@@ -1,13 +1,28 @@
 const hideById = (elementId) => {
   const element = document.getElementById(elementId);
+  console.log('hide ' + elementId, element);
   element.classList.add('hidden');
+};
+const showById = (elementId) => {
+  const element = document.getElementById(elementId);
+  console.log('show ' + elementId, element);
+  element.classList.remove('hidden');
+};
+
+const toggleHidden = (elementId) => {
+  const element = document.getElementById(elementId);
+
+  if (element.classList.contains('hidden')) {
+    element.classList.remove('hidden');
+  } else {
+    element.classList.add('hidden');
+  }
 };
 
 const showInfo = (message, isError = false) => {
   document.getElementById('info_message').innerText = message;
 
   const info = document.getElementById('info');
-  info.classList.remove('hidden');
 
   if (isError) {
     info.classList.add('error');
@@ -15,7 +30,9 @@ const showInfo = (message, isError = false) => {
     info.classList.remove('error');
   }
 
-  setTimeout(() => hideById('info'), 2332);
+  info.classList.remove('hidden');
+
+  setTimeout(() => hideById('info'), 6996);
 };
 
 const showError = (message) => showInfo(message, true);
@@ -55,16 +72,3 @@ const getData = () => {
 };
 
 
-// TODO: Add Google Sign-in.
-function onSignIn(user) {
-  const profile = user.getBasicProfile();
-  console.log(profile);
-  // The ID token you need to pass to your backend:
-  // accessToken = user.getAuthResponse().id_token;
-
-  document.getElementById('profile_name').innerText = profile.getName();
-  document.getElementById('profile_email').innerText = profile.getEmail();
-
-
-  getData();
-}
