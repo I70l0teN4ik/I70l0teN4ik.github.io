@@ -7,23 +7,29 @@
     <link rel="stylesheet" href="styles.css">
     <script src="script.js"></script>
 
-    <!-- TODO: Add Google Sign-in library -->
-    <script src="lib/client.js"></script>
-    <script async defer src="https://apis.google.com/js/api.js"
+    <meta name="google-signin-scope"
+          content="https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/spreadsheets">
+    <meta name="google-signin-client_id"
+          content="514837017664-4g4cgkkf1u47pbc9ob9buiv0q1c03s5g.apps.googleusercontent.com">
+
+    <script async defer src="lib/google_api.js"
             onload="this.onload=function(){};handleClientLoad()"
             onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
+    <script src="lib/client.js"></script>
 </head>
 <body>
     <header>
         <img alt="ExTr" src="images/icon.png">
         <div id="user">
-            <div id="profile" style="margin: 0 23px; text-align: right">
+            <div id="profile" style="padding: inherit; text-align: right">
                 <b id="profile_name"></b><br/>
                 <i id="profile_email"></i><br/>
                 <button id="signout_btn" class="hidden" onclick="signOut()">Sign Out</button>
             </div>
             <img id="profile_img" alt="profile_img" class="hidden" style="border-radius: 50%;">
+<!--            <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>-->
+
             <button id="signin_btn" class="hidden" onclick="handleAuthClick()">Sign In</button>
         </div>
     </header>
@@ -33,16 +39,13 @@
     </div>
     <div id="app">
         <h1>Expense Tracker \m/</h1>
-        <div id="expenses">
+        <div id="expenses" style="white-space: pre-wrap;">
             
         </div>
 
-        <p>Drive API Quickstart</p>
-
-        <!--Add buttons to initiate auth sequence and sign out-->
+        <h4>Drive API</h4>
 
         <pre id="content" style="white-space: pre-wrap;"></pre>
-
     </div>
 </body>
 </html>
