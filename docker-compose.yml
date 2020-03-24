@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  extr:
+    image: nginx:latest
+    working_dir: /usr/share/nginx/html
+    hostname: extr
+    container_name: extr
+    ports:
+      - 80:80
+    volumes:
+      - ./:/usr/share/nginx/html
