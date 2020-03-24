@@ -5,6 +5,7 @@
     <title>I70l0teN4ik</title>
     <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/btn.css">
     <script src="script.js"></script>
 
     <meta name="google-signin-scope"
@@ -22,16 +23,14 @@
     <header>
         <img alt="ExTr" src="images/icon.png">
         <div id="user">
-            <div id="profile" style="padding: inherit; text-align: right">
+            <div id="profile" style="padding: inherit; text-align: right; margin-right: 1rem;">
                 <b id="profile_name"></b><br/>
                 <i id="profile_email"></i><br/>
-                <button id="signout_btn" class="hidden" onclick="signOut()">Sign Out</button>
             </div>
-            <img id="profile_img" alt="profile_img" class="hidden" style="border-radius: 50%;">
-<!--            <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>-->
-
-            <button id="signin_btn" class="hidden" onclick="handleAuthClick()">Sign In</button>
+            <span id="signout_btn" class="btn gbtn hidden" onclick="signOut()">Sign Out</span>
+            <span id="signin_btn" class="btn gbtn hidden" onclick="handleAuthClick()">Sign In</span>
         </div>
+        <img id="profile_img" alt="profile_img" class="hidden" style="border-radius: 50%;">
     </header>
     <div id="info" class="hidden">
         <h3 id="info_message">Info</h3>

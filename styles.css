@@ -1,12 +1,12 @@
-@media (max-width: 767px) {
+@media screen and (max-device-width:480px) {
     body {
-        font-size: 24px;
+        font-size: x-large;
     }
 }
 
 body {
     font-family: 'Roboto', 'Helvetica', sans-serif;
-    font-size: medium;
+    font-size: large;
     margin: 0;
     padding: 0;
     background: #236932;
@@ -26,15 +26,15 @@ header {
     height: 10vh;
     min-height: 64px;
 }
+
 header > div, header > img {
     display: flex;
-    padding: 1rem;
 }
 
 header img {
     padding: 1rem;
-    height: 32px;
-    width: 32px;
+    width: 8vh;
+    min-width: 32px;
 }
 
 h1 a {
@@ -45,6 +45,15 @@ h1 a {
 div#user {
     justify-content: flex-end;
     width: 90vw;
+}
+
+div#app {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
 }
 
 div#info {
@@ -65,19 +74,10 @@ div#info > button {
     border: none;
 }
 
-div#app {
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 90vh;
-}
-
 .error {
-    background-color: #d50000!important;
+    background-color: #d50000 !important;
 }
 
 .hidden {
-    display: none!important;
+    display: none !important;
 }
