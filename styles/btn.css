@@ -23,11 +23,11 @@
 }
 
 .gbtn {
-    padding: 0.5rem 0.5rem 0.5rem 2rem;
+    padding-left: 2rem;
 }
 
 .gbtn:before {
-    content: url("../images/google_icon.svg");
+    content: url("../images/g_icon.svg");
 
     position: absolute;
     top: 50%;
