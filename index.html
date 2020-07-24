@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>I70l0teN4ik</title>
     <link rel="manifest" href="manifest.json" />
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/btn.css">
-    <script src="script.js"></script>
+    <script src="src/script.js"></script>
 
     <meta name="google-signin-scope"
           content="https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/spreadsheets">
@@ -17,7 +17,7 @@
             onload="this.onload=function(){};handleClientLoad()"
             onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
-    <script src="lib/client.js"></script>
+    <script src="src/client.js"></script>
 </head>
 <body>
     <header>
@@ -28,7 +28,7 @@
                 <i id="profile_email"></i><br/>
             </div>
             <span id="signout_btn" class="btn gbtn hidden" onclick="signOut()">Sign Out</span>
-            <span id="signin_btn" class="btn gbtn hidden" onclick="handleAuthClick()">Sign In</span>
+            <span id="signin_btn" class="btn gbtn" onclick="handleAuthClick()">Sign In</span>
         </div>
         <img id="profile_img" alt="profile_img" class="hidden" style="border-radius: 50%;">
     </header>
@@ -38,13 +38,18 @@
     </div>
     <div id="app">
         <h1>Expense Tracker \m/</h1>
-        <div id="expenses" style="white-space: pre-wrap;">
-            
+
+        <div id="file_explorer">
+            <h2>Drive API</h2>
+            <form onsubmit="exploreDrive();return false">
+                <input name="search_input" placeholder="Search for folder" type="text" id="search_input">
+                <button type="submit" class="btn">🔎</button>
+            </form>
+            <h3 id="folder_name"></h3>
+            <div id="content"></div>
         </div>
 
-        <h4>Drive API</h4>
-
-        <pre id="content" style="white-space: pre-wrap;"></pre>
+        <div id="expenses" style="white-space: pre-wrap;"></div>
     </div>
 </body>
 </html>

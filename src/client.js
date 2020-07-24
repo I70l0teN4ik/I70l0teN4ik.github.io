@@ -12,8 +12,6 @@ const DISCOVERY_DOCS = [
 const SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/spreadsheets';
 
 function onSignIn() {
-    showInfo('Signed in.');
-
     const profile = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
 
     document.getElementById('profile_name').innerText = profile.getName();
@@ -22,11 +20,11 @@ function onSignIn() {
     showById('profile_img');
     hideById('signin_btn');
     showById('signout_btn');
+
+    showInfo('Signed in.');
 }
 
 function onSignOut() {
-    showError('Signed out.');
-
     document.getElementById('profile_name').innerText = null;
     document.getElementById('profile_email').innerText = null;
     document.getElementById('profile_img').setAttribute('src', null);
@@ -34,7 +32,7 @@ function onSignOut() {
     showById('signin_btn');
     hideById('signout_btn');
 
-    console.log('User signed out.');
+    showError('Signed out.');
 }
 
 function signOut() {
@@ -56,13 +54,15 @@ function initClient() {
     gapi.client.init({
         clientId: CLIENT_ID,
         discoveryDocs: DISCOVERY_DOCS,
+        cookie_policy: 'none',
         scope: SCOPES
-    }).then(function () {
-        // Handle the initial sign-in state.
-        updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-    }, function(error) {
-        addRowToContainer(JSON.stringify(error, null, 2));
-    });
+    }).then(
+        () => {
+            gapi.auth2.getAuthInstance().isSignedIn.listen(updateSignInStatus);
+            updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+        },
+        error => addRowToContainer(JSON.stringify(error, null, 2))
+    );
 }
 
 /**
@@ -72,8 +72,7 @@ function initClient() {
 function updateSignInStatus(isSignedIn) {
     if (isSignedIn) {
         onSignIn();
-        listFiles();
-        getSheet();
+        findFolder();
     } else {
         onSignOut();
     }
@@ -83,7 +82,10 @@ function updateSignInStatus(isSignedIn) {
  *  Sign in the user upon button click.
  */
 function handleAuthClick(event) {
-    gapi.auth2.getAuthInstance().signIn().then(onSignIn());
+    gapi.auth2.getAuthInstance().signIn().then(() => {
+        gapi.auth2.getAuthInstance().currentUser.get()
+        onSignIn();
+    });
 }
 
 /**
@@ -92,46 +94,99 @@ function handleAuthClick(event) {
  *
  * @param {string} message Text to be placed in pre element.
  */
-function addRowToContainer(message, containerId = 'content') {
+function addRowToContainer(message, containerId = 'content', tagName = null, attributes = []) {
     const container = document.getElementById(containerId);
-    const textContent = document.createTextNode(message + '\n');
-    container.appendChild(textContent);
+    let node;
+
+    if (tagName) {
+        node = document.createElement(tagName);
+        node.innerText = message;
+
+        attributes.forEach(attr => node.setAttribute(...attr));
+    } else {
+        node = document.createTextNode(message + '\n');
+    }
+
+    container.appendChild(node);
 }
 
 /**
  * Print files.
  */
-function listFiles() {
+function findFolder(name = 'Expenses') {
     gapi.client.drive.files.list({
-        q: "mimeType='application/vnd.google-apps.folder' and name='Expenses'",
+        q: `mimeType='application/vnd.google-apps.folder' and name contains '${name}'`,
         pageSize: 50,
         fields: "nextPageToken, files(id, name)"
-    }).then(function(response) {
-        console.log(response);
-        addRowToContainer('Files:');
-        var files = response.result.files;
-        if (files && files.length > 0) {
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                addRowToContainer(file.name + ' (' + file.id + ')');
-            }
+    }).then(response => {
+        const folders = response.result.files;
+
+        if (folders && folders.length > 0) {
+            folders.forEach(file => {
+                // TODO: handle several folders found
+                document.getElementById('folder_name').textContent = file.name + ':';
+                listFiles(file.id);
+            });
         } else {
-            addRowToContainer('No files found.');
+            addRowToContainer(`Folder ${name} not found.`);
         }
     });
 }
 
+/**
+ * List files by folder ID
+ * @param id
+ */
+function listFiles(id) {
+    gapi.client.drive.files.list({
+        q: `'${id}' in parents`,
+        orderBy: 'name desc',
+        pageSize: 69,
+        fields: "nextPageToken, files(id, name, mimeType)"
+    }).then(response => {
+            const files = response.result.files;
+
+            if (files && files.length > 0) {
+                document.getElementById('content').innerHTML = '';
+
+                files.forEach(file => {
+                    if ('application/vnd.google-apps.spreadsheet' === file.mimeType) {
+                        addSheetElement(file);
+                    } else {
+                        addRowToContainer(file.name + ' (' + file.id + ')')
+                    }
+                });
+            } else {
+                addRowToContainer(`Folder ${name} not found.`);
+            }
+        },
+        error => addRowToContainer(JSON.stringify(error, null, 2))
+    );
+}
+
+function addSheetElement(file) {
+    const container = document.getElementById('content');
+    const button = document.createElement('span');
+
+    button.classList.add('btn');
+    button.textContent =  `${file.name} 🗠`;
+    button.onclick = () => getSheet(file.id);
+    button.style.margin = '.2rem';
+
+    container.appendChild(button);
+}
 
 /**
  * Print Expenses.
  */
-function getSheet(spreadsheetId = '1VrQGNyyiXOLGlSBUGLhI7SiZz8CRPX5dpqRrwsYc96s') {
+function getSheet(spreadsheetId) {
+    document.getElementById('expenses').innerHTML = '';
+
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: spreadsheetId,
         range: 'Transactions!B3:E69',
     }).then(res => {
-        // showInfo('Found Expenses!');
-        console.log(res);
+        showInfo('Found Expenses!');
         res.result.values.forEach(row => row.length && addRowToContainer(row, 'expenses'));
     }, err => showError('Error: ' + err.result.error.message));
 }

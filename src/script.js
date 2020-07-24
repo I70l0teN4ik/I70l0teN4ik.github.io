@@ -33,3 +33,4 @@ const showInfo = (message, isError = false) => {
 
 const showError = (message) => showInfo(message, true);
 
+const exploreDrive = () => findFolder(document.getElementById('search_input').value);

@@ -4,53 +4,35 @@
     position: relative;
     padding: 0.5rem;
     vertical-align: center;
+    width: fit-content;
 
     overflow: hidden;
 
     border-width: 0;
     outline: none;
-    border-radius: 2px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+    border-radius: .2rem;
+    box-shadow: 0 0 0 .2rem rgba(0, 23, 0, 0.8);
 
-    background-color: #207b00;
-    color: #000000;
+    background-color: #236932;
+    color: #002300;
 
     transition: background-color .3s;
 }
 
 .btn:hover, .btn:focus {
-    background-color: #236932;
+    background-color: #329632;
+}
+
+form > .btn {
+    display: inline;
+    box-shadow: none;
+    font-size: inherit;
 }
 
 .gbtn {
     padding-left: 2rem;
-}
-
-.gbtn:before {
-    content: url("../images/g_icon.svg");
-
-    position: absolute;
-    top: 50%;
-    left: 0.5rem;
-
-    display: block;
-    width: 0;
-    padding-top: 0;
-
-    border-radius: 100%;
-
-    background-color: rgba(236, 240, 241, .3);
-
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-}
-
-.btn:active:before {
-    width: 120%;
-    padding-top: 120%;
-
-    transition: width .2s ease-out, padding-top .2s ease-out;
+    background-image: url(../images/g_icon.svg);
+    background-position-y: center;
+    background-position-x: .5rem;
+    background-repeat: no-repeat;
 }
