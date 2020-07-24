@@ -3,7 +3,7 @@
     display: flex;
     position: relative;
     padding: 0.5rem;
-    vertical-align: center;
+    margin: 0.5rem;
     width: fit-content;
 
     overflow: hidden;
@@ -11,7 +11,7 @@
     border-width: 0;
     outline: none;
     border-radius: .2rem;
-    box-shadow: 0 0 0 .2rem rgba(0, 23, 0, 0.8);
+    box-shadow: 0 0 0 .1rem rgba(0, 23, 0, 0.8);
 
     background-color: #236932;
     color: #002300;

@@ -25,16 +25,16 @@
         <div id="user">
             <div id="profile" style="padding: inherit; text-align: right; margin-right: 1rem;">
                 <b id="profile_name"></b><br/>
-                <i id="profile_email"></i><br/>
+                <i id="profile_email"></i>
             </div>
-            <span id="signout_btn" class="btn gbtn hidden" onclick="signOut()">Sign Out</span>
-            <span id="signin_btn" class="btn gbtn" onclick="handleAuthClick()">Sign In</span>
+            <span id="signout_btn" class="btn gbtn hidden" onclick="signOut()">Out</span>
+            <span id="signin_btn" class="btn gbtn" onclick="handleAuthClick()">In</span>
         </div>
         <img id="profile_img" alt="profile_img" class="hidden" style="border-radius: 50%;">
     </header>
     <div id="info" class="hidden">
         <h3 id="info_message">Info</h3>
-        <button class="mdl-snackbar__action" type="button" onclick="toggleHidden('info')">X</button>
+        <button style="mdl-" type="button" onclick="toggleHidden('info')">x</button>
     </div>
     <div id="app">
         <h1>Expense Tracker \m/</h1>
@@ -42,14 +42,14 @@
         <div id="file_explorer">
             <h2>Drive API</h2>
             <form onsubmit="exploreDrive();return false">
-                <input name="search_input" placeholder="Search for folder" type="text" id="search_input">
+                <input name="search_input" placeholder="Search for folder" type="text" id="search_input" autocomplete="off">
                 <button type="submit" class="btn">🔎</button>
             </form>
             <h3 id="folder_name"></h3>
             <div id="content"></div>
         </div>
 
-        <div id="expenses" style="white-space: pre-wrap;"></div>
+        <pre id="expenses"></pre>
     </div>
 </body>
 </html>

@@ -171,7 +171,6 @@ function addSheetElement(file) {
     button.classList.add('btn');
     button.textContent =  `${file.name} 🗠`;
     button.onclick = () => getSheet(file.id);
-    button.style.margin = '.2rem';
 
     container.appendChild(button);
 }
