@@ -23,7 +23,7 @@
     <header>
         <img alt="ExTr" src="images/icon.png">
         <div id="user">
-            <div id="profile" style="padding: inherit; text-align: right; margin-right: 1rem;">
+            <div id="profile">
                 <b id="profile_name"></b><br/>
                 <i id="profile_email"></i>
             </div>
@@ -34,11 +34,10 @@
     </header>
     <div id="info" class="hidden">
         <h3 id="info_message">Info</h3>
-        <button style="mdl-" type="button" onclick="toggleHidden('info')">x</button>
+        <button type="button" onclick="toggleHidden('info')">x</button>
     </div>
     <div id="app">
-        <h1>Expense Tracker \m/</h1>
-
+        <h1>Expense Tracker <span contenteditable>\m/</span></h1>
         <div id="file_explorer">
             <h2>Drive API</h2>
             <form onsubmit="exploreDrive();return false">
@@ -49,7 +48,7 @@
             <div id="content"></div>
         </div>
 
-        <pre id="expenses"></pre>
+        <div id="expenses"></div>
     </div>
 </body>
 </html>

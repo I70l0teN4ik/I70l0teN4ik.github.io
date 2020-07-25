@@ -89,28 +89,6 @@ function handleAuthClick(event) {
 }
 
 /**
- * Append a pre element to the body containing the given message
- * as its text node. Used to display the results of the API call.
- *
- * @param {string} message Text to be placed in pre element.
- */
-function addRowToContainer(message, containerId = 'content', tagName = null, attributes = []) {
-    const container = document.getElementById(containerId);
-    let node;
-
-    if (tagName) {
-        node = document.createElement(tagName);
-        node.innerText = message;
-
-        attributes.forEach(attr => node.setAttribute(...attr));
-    } else {
-        node = document.createTextNode(message + '\n');
-    }
-
-    container.appendChild(node);
-}
-
-/**
  * Print files.
  */
 function findFolder(name = 'Expenses') {
@@ -164,17 +142,6 @@ function listFiles(id) {
     );
 }
 
-function addSheetElement(file) {
-    const container = document.getElementById('content');
-    const button = document.createElement('span');
-
-    button.classList.add('btn');
-    button.textContent =  `${file.name} 🗠`;
-    button.onclick = () => getSheet(file.id);
-
-    container.appendChild(button);
-}
-
 /**
  * Print Expenses.
  */
@@ -184,8 +151,8 @@ function getSheet(spreadsheetId) {
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: spreadsheetId,
         range: 'Transactions!B3:E69',
-    }).then(res => {
-        showInfo('Found Expenses!');
-        res.result.values.forEach(row => row.length && addRowToContainer(row, 'expenses'));
-    }, err => showError('Error: ' + err.result.error.message));
+    }).then(
+        res => res.result.values.forEach(row => row.length && addExpenseRow(row)),
+        err => showError('Error: ' + err.result.error.message)
+    );
 }
