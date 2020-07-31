@@ -3,11 +3,11 @@
     --color-light: #329632;
     --gap: .5rem;
     --border-radius: .2rem;
+    --border-color: rgba(0, 32, 0, 0.69);
 }
 
 body {
     font-family: 'Roboto', 'Helvetica', sans-serif;
-    font-size: large;
     margin: 0;
     padding: 0;
     background: #236932;
@@ -16,12 +16,18 @@ body {
     align-items: center;
 }
 
+@media screen and (max-device-width: 480px) {
+    body {
+        font-size: x-large;
+    }
+}
+
 header {
     color: var(--color-light);
     background: var(--color-dark);
-    padding: 0 var(--gap) ;
+    padding: 0 var(--gap);
     display: grid;
-    gap: var(--gap) ;
+    gap: var(--gap);
     grid-template-columns: auto 1fr auto;
     align-items: center;
 }
@@ -36,18 +42,13 @@ header img {
 }
 
 div#user {
-    gap: var(--gap) ;
+    gap: var(--gap);
     align-items: center;
     justify-content: flex-end;
 }
 
 div#profile {
     text-align: right;
-}
-
-h1 a {
-    color: #69AA69;
-    text-decoration: none;
 }
 
 input[type=text] {
@@ -59,7 +60,7 @@ input[type=text] {
 }
 
 input[name=search_input] {
-    padding: var(--gap)  0 var(--gap)  2rem;
+    padding: var(--gap) 0 var(--gap) 2rem;
     background-image: url(../images/g_drive.svg);
     background-position-y: center;
     background-repeat: no-repeat;
@@ -114,7 +115,7 @@ div#info > button {
 }
 
 #content {
-    padding: var(--gap) ;
+    padding: var(--gap);
     gap: var(--gap);
     display: flex;
     flex-wrap: wrap;
@@ -134,5 +135,5 @@ div#info > button {
     display: inline-grid;
     grid-template-columns: 2fr 2fr 3fr 3fr;
     grid-gap: 1rem;
-    border-bottom: 1px rgba(0,23,0,.69) solid;
+    border-bottom: 1px var(--border-color) solid;
 }

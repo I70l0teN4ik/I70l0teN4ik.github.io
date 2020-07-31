@@ -6,7 +6,6 @@
     <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/btn.css">
-    <script src="src/script.js"></script>
 
     <meta name="google-signin-scope"
           content="https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/spreadsheets">
@@ -17,18 +16,19 @@
             onload="this.onload=function(){};handleClientLoad()"
             onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
-    <script src="src/client.js"></script>
+    <script defer src="src/client.js"></script>
+    <script defer src="src/script.js"></script>
 </head>
 <body>
     <header>
-        <img alt="ExTr" src="images/icon.png">
+        <img alt="ExTr" src="images/icon_128.png">
         <div id="user">
             <div id="profile">
                 <b id="profile_name"></b><br/>
                 <i id="profile_email"></i>
             </div>
-            <span id="signout_btn" class="btn gbtn hidden" onclick="signOut()">Out</span>
-            <span id="signin_btn" class="btn gbtn hidden" onclick="handleAuthClick()">In</span>
+            <button id="signout_btn" class="btn gbtn hidden" onclick="signOut()">Out</button>
+            <button id="signin_btn" class="btn gbtn hidden" onclick="handleAuthClick()">In</button>
         </div>
         <img id="profile_img" alt="profile_img" class="hidden" style="border-radius: 50%;">
     </header>

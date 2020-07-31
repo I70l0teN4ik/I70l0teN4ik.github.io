@@ -63,7 +63,7 @@ const addRowToContainer = (message, containerId = 'content', tagName = null, att
 
 const addSheetElement = file => {
   const container = document.getElementById('content');
-  const button = document.createElement('span');
+  const button = document.createElement('button');
 
   button.classList.add('btn');
   button.textContent =  file.name;
