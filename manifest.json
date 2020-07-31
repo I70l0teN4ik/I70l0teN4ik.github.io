@@ -1,7 +1,28 @@
 {
   "short_name": "ExTr",
   "name": "I70l0teN4ik Expense Tracker",
+  "description": "Google Spreadsheets backed expense tracker.",
   "icons": [
+    {
+      "src": "/images/icon_32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "/images/icon_64.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "/images/icon_128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "/images/icon_256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
     {
       "src": "/images/icon.png",
       "type": "image/png",

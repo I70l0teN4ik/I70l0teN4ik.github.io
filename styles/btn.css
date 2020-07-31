@@ -1,22 +1,23 @@
 .btn {
     cursor: pointer;
-    display: flex;
-    padding: 0.5rem;
+    display: inline-flex;
+    place-items: center;
+    padding: var(--gap);
     width: fit-content;
 
     border-width: 0;
     outline: none;
-    border-radius: .2rem;
+    border-radius: var(--border-radius);
     box-shadow: 0 0 0 .1rem rgba(0, 23, 0, 0.8);
 
     background-color: #236932;
-    color: #002300;
+    color: var(--color-dark);
 
     transition: background-color .3s;
 }
 
 .btn:hover, .btn:focus {
-    background-color: #329632;
+    background-color: var(--color-light);
 }
 
 form > .btn {
@@ -29,6 +30,6 @@ form > .btn {
     padding-left: 2rem;
     background-image: url(../images/g_icon.svg);
     background-position-y: center;
-    background-position-x: .5rem;
+    background-position-x: var(--gap);
     background-repeat: no-repeat;
 }
