@@ -67,12 +67,11 @@ input[name=search_input] {
 }
 
 div#app {
-    padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     min-height: 90vh;
+    gap: var(--gap)
 }
 
 div#info {
@@ -125,6 +124,12 @@ div#info > button {
     overflow: hidden;
 }
 
+#expenses_container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
 #expenses {
     display: grid;
     grid-template-columns: 1fr;
@@ -133,7 +138,14 @@ div#info > button {
 
 #expenses > div {
     display: inline-grid;
-    grid-template-columns: 2fr 2fr 3fr 3fr;
-    grid-gap: 1rem;
+    grid-template-columns: 2fr 2fr 3fr 3fr auto;
+    gap: 1rem;
+    align-items: center;
     border-bottom: 1px var(--border-color) solid;
+}
+
+.ctrl {
+    align-self: flex-end;
+    display: flex;
+    gap: var(--gap);
 }

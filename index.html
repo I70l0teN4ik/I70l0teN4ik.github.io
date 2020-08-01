@@ -48,7 +48,13 @@
             <div id="content"></div>
         </div>
 
-        <div id="expenses"></div>
+        <div id="expenses_container">
+            <div id="expenses"></div>
+            <div id="expenses_ctrl" class="ctrl hidden">
+                <button class="btn" onclick="addEmptyExpenseRow()">⊕ row</button>
+                <button class="btn" onclick="saveCurrentSheet('expenses')">💾 save</button>
+            </div>
+        </div>
     </div>
 </body>
 </html>

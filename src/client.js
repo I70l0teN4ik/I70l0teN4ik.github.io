@@ -11,6 +11,9 @@ const DISCOVERY_DOCS = [
 // included, separated by spaces.
 const SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/spreadsheets';
 
+// TODO: this should be a var got from sheet metadata
+const RANGE = 'Transactions!B3:E369'
+
 function onSignIn() {
     const profile = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
 
@@ -113,7 +116,6 @@ function findFolder(name = 'Expenses') {
 
 /**
  * List files by folder ID
- * @param id
  */
 function listFiles(id) {
     gapi.client.drive.files.list({
@@ -143,16 +145,55 @@ function listFiles(id) {
 }
 
 /**
- * Print Expenses.
+ * Fetch spreadsheet created from Monthly Budget template and show Expenses table.
  */
 function getSheet(spreadsheetId) {
     document.getElementById('expenses').innerHTML = '';
+    document.getElementById('expenses').setAttribute('data-id', spreadsheetId);
 
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: spreadsheetId,
-        range: 'Transactions!B3:E69',
+        range: RANGE,
     }).then(
-        res => res.result.values.forEach(row => row.length && addExpenseRow(row)),
+        res => showExpenses(res.result.values),
         err => showError('Error: ' + err.result.error.message)
     );
+}
+
+/**
+ * Save rows in google spreadsheet:
+ *  - first clear (to delete any deleted row and skip original empty rows)
+ *  - than save current state.
+ */
+function updateSheet(spreadsheetId, rows) {
+    const valuesApi = gapi.client.sheets.spreadsheets.values,
+        params = {
+            range: RANGE,
+            spreadsheetId: spreadsheetId,
+            valueInputOption: 'USER_ENTERED',
+            includeValuesInResponse: true,
+        },
+        valueRangeBody = {
+            range: RANGE,
+            majorDimension: 'ROWS',
+            values: rows,
+        }
+
+    valuesApi.clear({
+        spreadsheetId: spreadsheetId,
+        range: RANGE,
+    }).then(
+        res => {
+            valuesApi.update(params, valueRangeBody).then(
+                res => {
+                    console.log(res)
+                    showInfo('Changes saved!')
+                    document.getElementById('expenses').innerHTML = '';
+                    showExpenses(res.result.updatedData.values)
+                },
+                err => showError('Failed to save: ' + err.result.error.message)
+            );
+        },
+        err => showError('Failed to clear range: ' + err.result.error.message)
+    )
 }

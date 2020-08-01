@@ -1,12 +1,8 @@
 const hideById = (elementId) => {
-  const element = document.getElementById(elementId);
-  console.log('hide ' + elementId, element);
-  element.classList.add('hidden');
+  document.getElementById(elementId).classList.add('hidden');
 };
 const showById = (elementId) => {
-  const element = document.getElementById(elementId);
-  console.log('show ' + elementId, element);
-  element.classList.remove('hidden');
+  document.getElementById(elementId).classList.remove('hidden');
 };
 
 const toggleHidden = (elementId) => {
@@ -28,7 +24,7 @@ const showInfo = (message, isError = false) => {
 
   info.classList.remove('hidden');
 
-  setTimeout(() => hideById('info'), 6996);
+  setTimeout(() => hideById('info'), 2369);
 };
 
 const showError = (message) => showInfo(message, true);
@@ -72,17 +68,72 @@ const addSheetElement = file => {
   container.appendChild(button);
 };
 
-const addExpenseRow = rowColumns => {
-  const container = document.getElementById('expenses');
+const createEditableCell = content => {
+  const cell = document.createElement('span');
+  cell.setAttribute('contenteditable', 'true');
+  cell.textContent = content;
+
+  return cell;
+};
+
+const addRowButtons = row => {
+  const buttonsCell = document.createElement('div'),
+      addButton = document.createElement('button'),
+      removeButton = document.createElement('button');
+
+  addButton.classList.add('btn');
+  addButton.textContent =  '⊕';
+  addButton.onclick = () => addEmptyExpenseRow(row);
+
+  removeButton.classList.add('btn');
+  removeButton.textContent =  '⊖';
+  removeButton.onclick = () => removeRow(row);
+
+  buttonsCell.classList.add('ctrl');
+  buttonsCell.appendChild(addButton);
+  buttonsCell.appendChild(removeButton);
+  row.appendChild(buttonsCell);
+};
+
+const addExpenseRow = (rowColumns, refRow) => {
   const row = document.createElement('div');
 
-  rowColumns.forEach(col => {
-    const column = document.createElement('span');
-    column.setAttribute('contenteditable', 'true');
-    column.textContent = col;
+  rowColumns.forEach(col => row.appendChild(createEditableCell(col)));
+  addRowButtons(row)
 
-    row.appendChild(column);
-  });
-
-  container.appendChild(row);
+  document.getElementById('expenses').insertBefore(row, refRow?.nextSibling);
 };
+
+const addEmptyExpenseRow = (refRow) => {
+  addExpenseRow(Array(4).fill(''), refRow);
+};
+
+const removeRow = row => {
+  row.parentNode.removeChild(row);
+};
+
+const showExpenses = values => {
+  values.forEach(row => row.length && addExpenseRow(row))
+  addEmptyExpenseRow()
+  showById('expenses_ctrl')
+};
+
+/**
+ * Parse current table data back to values range, skip empty rows.
+ */
+const parseSheetToValues = sheetName => {
+  const rows = [];
+
+  document.getElementById(sheetName).childNodes.forEach(row => {
+    const rowItem = [];
+    row.childNodes.forEach(cell => cell.textContent && rowItem.push(cell.textContent))
+    rowItem.length > 1 && rows.push(rowItem.slice(0, -1))
+  })
+
+  return rows;
+};
+
+const saveCurrentSheet = (sheetName) => updateSheet(
+  document.getElementById(sheetName).getAttribute('data-id'),
+  parseSheetToValues(sheetName)
+);
